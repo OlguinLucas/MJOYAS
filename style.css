@@ -129,7 +129,7 @@ body {
     padding: 20px;
 }
 
-/* --- TARJETAS DE PRODUCTO + INTERACCIONES MINIMALISTAS --- */
+/* --- TARJETAS DE PRODUCTO + INTERACCIONES --- */
 .card-producto {
     background-color: #ffffff;
     border-radius: 4px;
@@ -141,8 +141,6 @@ body {
     justify-content: space-between;
     border: 1px solid #f0edf7;
     transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
-    
-    /* Animación de Fade-In suave */
     animation: unirseCards 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
@@ -186,7 +184,7 @@ body {
 }
 
 .card-producto:hover .img-container img {
-    transform: scale(1.04); /* Zoom suave interno */
+    transform: scale(1.04);
 }
 
 .placeholder-text {
@@ -389,14 +387,13 @@ body {
     background-color: #20ba5a;
 }
 
-/* --- CARRITO INTERACTIVO CON MINIATURAS --- */
+/* --- ELEMENTOS INTERNOS DEL CARRITO --- */
 .cart-item {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 15px 0;
     border-bottom: 1px solid #f0edf7;
-    animation: unirseCards 0.3s ease forwards;
 }
 
 .cart-item-img {
@@ -462,10 +459,10 @@ body {
     text-align: center;
 }
 
-/* --- DOUBLE NAVEGACIÓN STICKY (PRO FILTROS) --- */
+/* --- FILTROS CONTENEDOR STICKY --- */
 .filtros-contenedor-sticky {
     position: sticky;
-    top: 64px; /* Flota abajo de tu barra de navegación principal */
+    top: 64px;
     z-index: 100;
     background-color: #fcfbf9;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
@@ -473,7 +470,6 @@ body {
     padding: 10px 0;
 }
 
-/* NIVEL 1: MATERIAL (Pestañas ultra-limpias) */
 .material-nav {
     display: flex;
     justify-content: center;
@@ -502,7 +498,6 @@ body {
     font-weight: 600;
 }
 
-/* Línea sutil minimalista que se expande bajo el elemento activo */
 .btn-material.active::after {
     content: '';
     position: absolute;
@@ -519,7 +514,6 @@ body {
     to { width: 100%; left: 0; }
 }
 
-/* NIVEL 2: CATEGORÍAS (Cápsulas) */
 .filtros-nav {
     display: flex;
     justify-content: center;
@@ -546,7 +540,6 @@ body {
     border-color: #cc929c;
 }
 
-/* RETORNO UX DETALLES */
 .btn-volver {
     display: inline-block;
     color: #cc929c;
@@ -559,4 +552,35 @@ body {
 .btn-volver:hover {
     color: #b57d87;
     text-decoration: underline;
+}
+
+/* --- PIE DE PÁGINA REFORZADO PRO UX --- */
+footer, .footer {
+    background-color: #decbc7 !important;
+    padding: 40px 20px !important;
+    text-align: center !important;
+    font-size: 13px !important;
+    color: #5a4f4d !important;
+    margin-top: 60px !important;
+    line-height: 1.8 !important;
+    display: block !important;
+    width: 100% !important;
+    clear: both !important;
+}
+
+footer a, .footer a {
+    color: #5a4f4d !important;
+    font-weight: bold !important;
+    text-decoration: none !important;
+}
+
+footer a:hover, .footer a:hover {
+    text-decoration: underline !important;
+}
+
+footer .copyright, .footer .copyright {
+    margin-top: 10px !important;
+    font-size: 11px !important;
+    color: #7d6f6d !important;
+    display: block !important;
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MJOYAS | Joyas de plata 925 y Acero</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.1">
 </head>
 <body>
 
@@ -92,7 +92,6 @@
         document.addEventListener("DOMContentLoaded", async () => {
             productos = await cargarProductosDesdeSheets();
             
-            // Sincronización si el cliente viene navegando con filtros previos
             const urlParams = new URLSearchParams(window.location.search);
             const matParam = urlParams.get('material');
             const tipoParam = urlParams.get('tipo');
