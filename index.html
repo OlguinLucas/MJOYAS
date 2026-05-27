@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJOYAS | Joyas de plata 925 y Acero</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo" onclick="location.href='index.html'">MJOYAS</div>
+        <button class="btn-carrito" onclick="toggleCart()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span id="cart-count" class="badge-carrito">0</span>
+        </button>
+    </header>
+
+    <section id="inicio" class="hero-section">
+        <div class="hero-contenido">
+            <h1>Una marca diseñada para poder acompañarte en el día a día y lucir elegante</h1>
+            <p>Elegí tus joyas favoritas, armá tu carrito y coordiná el pago por WhatsApp</p>
+        </div>
+    </section>
+
+    <div class="filtros-contenedor-sticky">
+        <div class="material-nav">
+            <button class="btn-material active" data-material="todos" onclick="filtrarMaterial('todos', this)">Todo el catálogo</button>
+            <button class="btn-material" data-material="plata" onclick="filtrarMaterial('plata', this)">Plata 925</button>
+            <button class="btn-material" data-material="acero" onclick="filtrarMaterial('acero', this)">Acero Quirúrgico</button>
+        </div>
+        
+        <nav class="filtros-nav">
+            <button class="btn-filtro active" data-tipo="todos" onclick="filtrarTipo('todos', this)">Ver Todo</button>
+            <button class="btn-filtro" data-tipo="anillos" onclick="filtrarTipo('anillos', this)">Anillos</button>
+            <button class="btn-filtro" data-tipo="cadenas" onclick="filtrarTipo('cadenas', this)">Cadenas</button>
+            <button class="btn-filtro" data-tipo="pulseras" onclick="filtrarTipo('pulseras', this)">Pulseras</button>
+            <button class="btn-filtro" data-tipo="dijes" onclick="filtrarTipo('dijes', this)">Dijes</button>
+            <button class="btn-filtro" data-tipo="aritos" onclick="filtrarTipo('aritos', this)">Aritos</button>
+        </nav>
+    </div>
+
+    <main class="catalogo-contenedor">
+        <section id="seccion-plata" class="categoria-seccion">
+            <h2 class="seccion-titulo">Colección Plata 925</h2>
+            <div id="productos-plata" class="productos-grid">
+                <p class="cargando-texto">Cargando colección de Plata...</p>
+            </div>
+        </section>
+
+        <section id="seccion-acero" class="categoria-seccion">
+            <h2 class="seccion-titulo">Colección Acero</h2>
+            <div id="productos-acero" class="productos-grid">
+                <p class="cargando-texto">Cargando colección de Acero...</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+    <aside id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Tu Pedido</h3>
+            <button class="btn-cerrar-cart" onclick="toggleCart()">&times;</button>
+        </div>
+
+        <div id="cart-items" class="cart-items-lista">
+            <p class="carrito-vacio-txt">El carrito está vacío.</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total-linea">
+                <span>Total estimado:</span>
+                <span id="cart-total-price" class="cart-total-monto">$0</span>
+            </div>
+            <button class="btn-enviar-wa" onclick="enviarWhatsApp()">
+                Confirmar Pedido por WhatsApp
+            </button>
+        </div>
+    </aside>
+
+    <footer class="footer">
+        <p>Encontranos en Instagram: <a href="https://instagram.com/joyas_dor" target="_blank">@joyas_dor</a></p>
+        <p class="copyright">© 2026 MJOYAS - Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            productos = await cargarProductosDesdeSheets();
+            
+            // UX: Sincronizar filtros si viene redirigido desde el detalle
+            const urlParams = new URLSearchParams(window.location.search);
+            const matParam = urlParams.get('material');
+            const tipoParam = urlParams.get('tipo');
+            
+            if (matParam) {
+                filtroMaterialActual = matParam;
+                const bMat = document.querySelector(`.btn-material[data-material="${matParam}"]`);
+                if (bMat) {
+                    document.querySelectorAll('.btn-material').forEach(b => b.classList.remove('active'));
+                    bMat.classList.add('active');
+                }
+            }
+            if (tipoParam) {
+                filtroTipoActual = tipoParam;
+                const bTipo = document.querySelector(`.btn-filtro[data-tipo="${tipoParam}"]`);
+                if (bTipo) {
+                    document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('active'));
+                    bTipo.classList.add('active');
+                }
+            }
+            
+            renderizarCatalogo();
+            actualizarInterfaz(); 
+        });
+    </script>
+</body>
+</html>

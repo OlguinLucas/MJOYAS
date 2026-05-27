@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJOYAS | Detalle del Producto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo" onclick="location.href='index.html'">MJOYAS</div>
+        <button class="btn-carrito" onclick="toggleCart()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span id="cart-count" class="badge-carrito">0</span>
+        </button>
+    </header>
+
+    <div class="filtros-contenedor-sticky">
+        <div class="material-nav">
+            <button class="btn-material" onclick="redireccionarConFiltro('todos', 'todos')">Todo el catálogo</button>
+            <button class="btn-material" onclick="redireccionarConFiltro('plata', 'todos')">Plata 925</button>
+            <button class="btn-material" onclick="redireccionarConFiltro('acero', 'todos')">Acero Quirúrgico</button>
+        </div>
+        <nav class="filtros-nav">
+            <button class="btn-filtro" onclick="redireccionarConFiltro('todos', 'todos')">Ver Todo</button>
+            <button class="btn-filtro" onclick="redireccionarConFiltro('todos', 'anillos')">Anillos</button>
+            <button class="btn-filtro" onclick="redireccionarConFiltro('todos', 'cadenas')">Cadenas</button>
+            <button class="btn-filtro" onclick="redireccionarConFiltro('todos', 'pulseras')">Pulseras</button>
+            <button class="btn-filtro" onclick="redireccionarConFiltro('todos', 'dijes')">Dijes</button>
+            <button class="btn-filtro" onclick="redireccionarConFiltro('todos', 'aritos')">Aritos</button>
+        </nav>
+    </div>
+
+    <div class="catalogo-contenedor" style="padding-bottom: 0; padding-top: 20px;">
+        <a href="index.html" class="btn-volver">← Volver al catálogo</a>
+    </div>
+
+    <main id="detalle-producto" class="catalogo-contenedor" style="padding: 20px 5% 40px 5%;"></main>
+
+    <section class="catalogo-contenedor">
+        <h2 class="seccion-titulo">Quizás te interese...</h2>
+        <div id="recomendados" class="productos-grid"></div>
+    </section>
+
+    <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+    <aside id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Tu Pedido</h3>
+            <button class="btn-cerrar-cart" onclick="toggleCart()">&times;</button>
+        </div>
+
+        <div id="cart-items" class="cart-items-lista">
+            <p class="carrito-vacio-txt">El carrito está vacío.</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total-linea">
+                <span>Total estimado:</span>
+                <span id="cart-total-price" class="cart-total-monto">$0</span>
+            </div>
+            <button class="btn-enviar-wa" onclick="enviarWhatsApp()">
+                Confirmar Pedido por WhatsApp
+            </button>
+        </div>
+    </aside>
+
+    <footer class="footer">
+        <p>Encontranos en Instagram: <a href="https://instagram.com/joyas_dor" target="_blank">@joyas_dor</a></p>
+        <p class="copyright">© 2026 MJOYAS - Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            await cargarDatosYMostrarDetalle();
+        });
+        
+        function redireccionarConFiltro(material, tipo) {
+            let url = 'index.html';
+            if (material !== 'todos' || tipo !== 'todos') {
+                url += `?material=${material}&tipo=${tipo}`;
+            }
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
