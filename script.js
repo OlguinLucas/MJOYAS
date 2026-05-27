@@ -14,7 +14,7 @@ const productosRespaldo = [
 
 let productos = [];
 
-// DOS VARIABLES GLOBALES DE CONTROL PARA FILTRADO CRUZADO
+// ESTADOS GLOBALES PARA FILTRADO SIMULTÁNEO
 let filtroMaterialActual = 'todos';
 let filtroTipoActual = 'todos';
 
@@ -79,7 +79,7 @@ function abrirDetalle(id) {
     window.location.href = 'detalle.html';
 }
 
-// --- ACCIONES DE FILTRADO ---
+// --- LOGICA DE FILTRADO ---
 function filtrarMaterial(material, boton) {
     filtroMaterialActual = material;
     document.querySelectorAll('.btn-material').forEach(btn => btn.classList.remove('active'));
@@ -94,7 +94,7 @@ function filtrarTipo(tipo, boton) {
     renderizarCatalogo();
 }
 
-// --- RENDER CATALOGO CON INTELIGENCIA VISUAL (OCULTA SECCIONES VACIAS) ---
+// --- RENDER CATALOGO CON LIMPIEZA VISUAL (OCULTA CATEGORÍAS VACÍAS) ---
 function renderizarCatalogo() {
     const contenedorPlata = document.getElementById("productos-plata");
     const contenedorAcero = document.getElementById("productos-acero");
@@ -110,7 +110,7 @@ function renderizarCatalogo() {
     let cantAcero = 0;
 
     productos.forEach(prod => {
-        // Validación cruzada de ambos filtros activos simultáneamente
+        // Valida filtros cruzados
         if (filtroMaterialActual !== 'todos' && prod.categoria !== filtroMaterialActual) return;
         if (filtroTipoActual !== 'todos' && prod.tipo !== filtroTipoActual) return;
 
@@ -144,21 +144,12 @@ function renderizarCatalogo() {
         }
     });
 
-    // UX PREMIUM: Si una sección completa no tiene productos debido a los filtros, la ocultamos limpiamente
-    if (cantPlata === 0) {
-        seccionPlataBox.style.display = "none";
-    } else {
-        seccionPlataBox.style.display = "block";
-    }
-
-    if (cantAcero === 0) {
-        seccionAceroBox.style.display = "none";
-    } else {
-        seccionAceroBox.style.display = "block";
-    }
+    // UX: Si una colección queda vacía por los filtros, se oculta estéticamente
+    seccionPlataBox.style.display = (cantPlata === 0) ? "none" : "block";
+    seccionAceroBox.style.display = (cantAcero === 0) ? "none" : "block";
 }
 
-// --- MOSTRAR PANTALLA DETALLE ---
+// --- MOSTRAR DETALLE ---
 async function cargarDatosYMostrarDetalle() {
     productos = await cargarProductosDesdeSheets();
     actualizarInterfaz();
@@ -211,7 +202,7 @@ async function cargarDatosYMostrarDetalle() {
     });
 }
 
-// --- CONTROLES CARD ---
+// --- CONTROLES DE INTERFAZ Y CARRITO ---
 function cambiarCantidadCard(id, cambio) {
     const el = document.getElementById(`cant-card-${id}`);
     if (!el) return;
@@ -232,6 +223,7 @@ function agregarAlCarrito(id) {
     elCant.innerText = "1";
     guardarYActualizar();
 
+    // UX: Abre el sidebar del carrito para feedback inmediato de compra
     const sidebar = document.getElementById("cart-sidebar");
     if (!sidebar.classList.contains("open")) {
         toggleCart();
@@ -262,7 +254,6 @@ function guardarYActualizar() {
     actualizarInterfaz();
 }
 
-// --- ACTUALIZAR INTERFAZ CARRITO ---
 function actualizarInterfaz() {
     const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
     document.getElementById("cart-count").innerText = totalItems;
@@ -305,6 +296,7 @@ function toggleCart() {
     document.getElementById("cart-overlay").classList.toggle("open");
 }
 
+// --- DISPARADOR OPTIMIZADO WHATSAPP (MÓVIL vs COMPUTADORA) ---
 function enviarWhatsApp() {
     if (carrito.length === 0) {
         alert("Tu carrito está vacío.");
@@ -321,5 +313,14 @@ function enviarWhatsApp() {
     const precioTotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
     mensaje += `\n💰 *Total del pedido:* $${precioTotal}\n\n¿Cómo coordinamos el pago y envío?`;
 
-    window.open(`https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensaje)}`, "_blank");
+    const url = `https://api.whatsapp.com/send?phone=${numeroTelefono}&text=${encodeURIComponent(mensaje)}`;
+
+    // Detección de agente móvil (UX Evita el bloqueo de ventanas emergentes en teléfonos)
+    const esCelular = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (esCelular) {
+        window.location.href = url; // Celulares: Abre la app directamente en el mismo hilo
+    } else {
+        window.open(url, "_blank"); // PC: Lanza nueva pestaña para conservar el catálogo
+    }
 }

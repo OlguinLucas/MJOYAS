@@ -92,7 +92,7 @@
         document.addEventListener("DOMContentLoaded", async () => {
             productos = await cargarProductosDesdeSheets();
             
-            // UX: Sincronizar filtros si viene redirigido desde el detalle
+            // Sincronización si el cliente viene navegando con filtros previos
             const urlParams = new URLSearchParams(window.location.search);
             const matParam = urlParams.get('material');
             const tipoParam = urlParams.get('tipo');

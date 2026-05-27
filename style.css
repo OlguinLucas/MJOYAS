@@ -129,7 +129,7 @@ body {
     padding: 20px;
 }
 
-/* --- TARJETAS DE PRODUCTO + ANIMACIONES --- */
+/* --- TARJETAS DE PRODUCTO + INTERACCIONES MINIMALISTAS --- */
 .card-producto {
     background-color: #ffffff;
     border-radius: 4px;
@@ -142,7 +142,7 @@ body {
     border: 1px solid #f0edf7;
     transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
     
-    /* ANIMACIÓN DE ENTRADA SUAVE MINIMALISTA */
+    /* Animación de Fade-In suave */
     animation: unirseCards 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
@@ -186,7 +186,7 @@ body {
 }
 
 .card-producto:hover .img-container img {
-    transform: scale(1.04); /* Zoom interno elegante */
+    transform: scale(1.04); /* Zoom suave interno */
 }
 
 .placeholder-text {
@@ -389,34 +389,7 @@ body {
     background-color: #20ba5a;
 }
 
-/* --- PIE DE PÁGINA --- */
-.footer {
-    background-color: #decbc7;
-    padding: 30px 20px;
-    text-align: center;
-    font-size: 13px;
-    color: #5a4f4d;
-    margin-top: 50px;
-    line-height: 1.8;
-}
-
-.footer a {
-    color: #5a4f4d;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.footer a:hover {
-    text-decoration: underline;
-}
-
-.copyright {
-    margin-top: 10px;
-    font-size: 11px;
-    color: #7d6f6d;
-}
-
-/* --- CARRITO ELEMENTOS --- */
+/* --- CARRITO INTERACTIVO CON MINIATURAS --- */
 .cart-item {
     display: flex;
     align-items: center;
@@ -489,10 +462,10 @@ body {
     text-align: center;
 }
 
-/* --- CONTENEDOR INTEGRADO STICKY DE FILTROS --- */
+/* --- DOUBLE NAVEGACIÓN STICKY (PRO FILTROS) --- */
 .filtros-contenedor-sticky {
     position: sticky;
-    top: 64px; /* Encaja perfectamente abajo de tu Navbar */
+    top: 64px; /* Flota abajo de tu barra de navegación principal */
     z-index: 100;
     background-color: #fcfbf9;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
@@ -500,7 +473,7 @@ body {
     padding: 10px 0;
 }
 
-/* FILTRO 1: MATERIALES (DISEÑO ULTRA-MINIMALISTA) */
+/* NIVEL 1: MATERIAL (Pestañas ultra-limpias) */
 .material-nav {
     display: flex;
     justify-content: center;
@@ -529,7 +502,7 @@ body {
     font-weight: 600;
 }
 
-/* Línea sutil minimalista inferior para la pestaña activa */
+/* Línea sutil minimalista que se expande bajo el elemento activo */
 .btn-material.active::after {
     content: '';
     position: absolute;
@@ -546,7 +519,7 @@ body {
     to { width: 100%; left: 0; }
 }
 
-/* FILTRO 2: CAPSULAS DE CATEGORIAS */
+/* NIVEL 2: CATEGORÍAS (Cápsulas) */
 .filtros-nav {
     display: flex;
     justify-content: center;
@@ -573,7 +546,7 @@ body {
     border-color: #cc929c;
 }
 
-/* RETORNO UX */
+/* RETORNO UX DETALLES */
 .btn-volver {
     display: inline-block;
     color: #cc929c;
